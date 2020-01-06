@@ -1,0 +1,12 @@
+body {
+    background-color: lightgray;
+}
+
+.hover-unhide {
+    visibility: hidden;
+}
+
+.hover-unhide:hover {
+    visibility: visible;
+}
+
