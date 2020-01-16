@@ -2,11 +2,76 @@ body {
     background-color: lightgray;
 }
 
-.hover-unhide {
+.hoverable {
     visibility: hidden;
 }
 
-.hover-unhide:hover {
+.hover-action:hover .hoverable {
     visibility: visible;
 }
 
+.hover-action:hover > img {
+    -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+    filter: blur(5px) brightness(50%);
+}
+
+.card-deck {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.card-deck .card {
+    min-width: 50%;
+    min-height: 100%;
+}
+
+@media (min-width: 472px) {
+    .card-deck .card {
+        min-width: 33%;
+    }
+}
+
+@media (min-width: 654px) {
+    .card-deck .card {
+        min-width: 25%;
+    }
+}
+
+@media (min-width: 867px) {
+    .card-deck .card {
+        min-width: 20%;
+    }
+}
+
+@media (min-width: 986px) {
+    .card-deck .card {
+        min-width: 15%;
+    }
+}
+
+/*
+
+@media (min-width: 992px) { ... }
+
+// Extra  devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+*/
+
+
+.card-deck .card-img-overlay {
+    overflow-y: scroll;
+}
+
+.card .img {
+    object-fit: cover;
+}
+
+html, body, .container-fluid {
+    height: 100%;
+}
+
+.movie-list {
+    height: 40%;
+}
