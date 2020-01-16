@@ -2,39 +2,37 @@
 
 {% block title %}Hello HomepageController!{% endblock %}
 
-{% block stylesheets %}
-    {{ encore_entry_link_tags('homepage') }}
-{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
 <h1 class="text-center">Recommended</h1>
 
-
-<div class="card bg-dark text-white movie-card">
-  <img src="https://image.tmdb.org/t/p/w1280/kc62PCo8u5sZKq0crYvZSidLFPr.jpg" class="card-img" alt="Jumanji">
-  <div class="card-img-overlay">
-    <h5 class="card-title hover-unhide">Card title</h5>
-    <p class="card-text hover-unhide">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text hover-unhide">Last updated 3 mins ago</p>
-  </div>
+<div class="movie-list">
+    <div class="card-deck">
+        {% for movie in recommended %}
+            <div class="card bg-dark text-white hover-action">
+                <img src={{ movie.poster }} class="card-img" alt={{ movie.title }}>
+                <div class="card-img-overlay hoverable">
+                    <h5 class="card-title font-weight-bold">{{ movie.title }}</h5>
+                    <p class="card-text font-weight-bold">{{ movie.synopsis }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
+<h1 class="text-center">Last Watched</h1>
 
-    {% for movie in recommended %}
-    {% endfor %}
-</div>
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/kevin/Documents/Dev/PHP/Netflix/src/Controller/HomepageController.php'|file_link(0) }}">src/Controller/HomepageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/kevin/Documents/Dev/PHP/Netflix/templates/homepage/index.html.twig'|file_link(0) }}">templates/homepage/index.html.twig</a></code></li>
-    </ul>
+<div class="movie-list">
+    <div class="card-deck">
+        {% for movie in last_watched %}
+            <div class="card bg-dark text-white hover-action">
+                <img src={{ movie.poster }} class="card-img" alt={{ movie.title }}>
+                <div class="card-img-overlay hoverable">
+                    <h5 class="card-title font-weight-bold">{{ movie.title }}</h5>
+                    <p class="card-text font-weight-bold">{{ movie.synopsis }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
