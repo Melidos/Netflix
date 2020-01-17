@@ -12,3 +12,9 @@ require('../css/app.css');
 // const $ = require('jquery');
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+function getSize() {
+    document.getElementById("test").innerHTML = window.innerWidth + " x " + window.innerHeight;
+}
+window.onresize = getSize;
+window.onload = getSize;
