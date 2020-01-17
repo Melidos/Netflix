@@ -6,33 +6,30 @@
 
 <h1 class="text-center">Recommended</h1>
 
-<div class="movie-list">
-    <div class="card-deck">
-        {% for movie in recommended %}
-            <div class="card bg-dark text-white hover-action">
-                <img src={{ movie.poster }} class="card-img" alt={{ movie.title }}>
-                <div class="card-img-overlay hoverable">
-                    <h5 class="card-title font-weight-bold">{{ movie.title }}</h5>
-                    <p class="card-text font-weight-bold">{{ movie.synopsis }}</p>
-                </div>
+<div class="card-deck2">
+    {% for movie in recommended %}
+        <div class="card2 text-white hover-action">
+            <img src={{ movie.poster }} class="" alt={{ movie.title }}>
+            <div class="hoverable">
+                <h5 class="font-weight-bold movie-title">{{ movie.title }}</h5>
+                <p class="font-weight-bold movie-synopsis">{{ movie.synopsis }}</p>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
 </div>
 
 <h1 class="text-center">Last Watched</h1>
 
-<div class="movie-list">
-    <div class="card-deck">
-        {% for movie in last_watched %}
-            <div class="card bg-dark text-white hover-action">
-                <img src={{ movie.poster }} class="card-img" alt={{ movie.title }}>
-                <div class="card-img-overlay hoverable">
-                    <h5 class="card-title font-weight-bold">{{ movie.title }}</h5>
-                    <p class="card-text font-weight-bold">{{ movie.synopsis }}</p>
-                </div>
+<div class="card-deck2">
+    {% for movie in last_watched %}
+        <div class="card2 text-white hover-action">
+            <img src={{ movie.poster }} class="" alt={{ movie.title }}>
+            <div class="hoverable">
+                <h5 class="font-weight-bold movie-title">{{ movie.title }}</h5>
+                <p class="font-weight-bold movie-synopsis">{{ movie.synopsis }}</p>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
 </div>
+
 {% endblock %}
