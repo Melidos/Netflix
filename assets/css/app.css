@@ -68,7 +68,7 @@ body,
 }
 
 .background-title {
-    height: 40%;
+    min-height: 40%;
 }
 
 .img-fluid {
@@ -76,11 +76,18 @@ body,
 }
 
 .title-block {
-    z-index: 1000000000000;
+    z-index: 1;
     background: white;
     width: 95%;
     margin: 0 auto;
     padding: 3%;
     margin-top: -100px;
     border-radius: 0;
+}
+
+.added-block {
+    font-size: 2em;
+    background: white;
+    margin-top: 1em;
+    padding: 0 1em;
 }
