@@ -3,18 +3,33 @@
 {% block title %}Hello MovieController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/kevin/Documents/Dev/PHP/Netflix/src/Controller/MovieController.php'|file_link(0) }}">src/Controller/MovieController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/kevin/Documents/Dev/PHP/Netflix/templates/movie/index.html.twig'|file_link(0) }}">templates/movie/index.html.twig</a></code></li>
-    </ul>
+<div class="background-title">
+    <div class="" style="background: url({{ info.background }}); background-size: cover;">
+        <img class="img-fluid" src="{{ info.background }}"/>
+    </div>
+    <div class="title-block">
+        <span class="" style="font-size: 3em;">{{ info.name }}</span>
+        <br/>
+        <span class="text-muted" style="font-size: 2em;">{{ info.release_year }}</span>
+        <p style="font-size:2em; text-align: justify; margin-top: 1em;">{{ info.synopsis }}</p>
+        
+    </div>
 </div>
+
+<div class="added-block">
+    <p class="text-left" style="float:left;">Ajouter a la liste des films vus</p>
+    <p class="text-right" style="float:right;">Ajouter a la liste des films a voir</p>
+    <div style="clear:both;"></div>
+</div>
+
+<h1 class="text-center" style="padding-top: 1em; padding-bottom: 1em;">Films Similaires</h1>
+<div class="card-deck2" style="height: 40%">
+    {% for movie in similar_movies %}
+        <div class="card2 text-white hover-action">
+            <img src={{ movie }} class="">
+        </div>
+    {% endfor %}
+</div>
+
 {% endblock %}
