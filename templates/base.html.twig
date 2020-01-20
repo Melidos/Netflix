@@ -23,15 +23,18 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a class="navbar-brand" href="#">Netflix</a>
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Accueil <span class="sr-only">(actuel)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">#</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">#</a>
-                </li>
+                    <li class="nav-item {% if controller_name is defined and controller_name == "HomepageController" %}active{% endif %}">
+                        <a class="nav-link" href="{{ path("homepage") }}">Accueil</a>
+                    </li>
+                    {% if app.user %}
+                        <div class="nav-item {{ controller_name is defined and controller_name == "UserController" ? 'active' }}">
+                            Connecte en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Deconnexion</a>
+                        </div>
+                    {% else %}
+                        <li class="nav-item {{ controller_name is defined and controller_name == "UserController" ? 'active' }}">
+                            <a class="nav-link" href="{{ path("app_login") }}">Connexion</a>
+                        </li>
+                    {% endif %}
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
