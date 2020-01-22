@@ -8,12 +8,15 @@
 
 <div class="card-deck2">
     {% for movie in recommended %}
-        <div class="card2 text-white hover-action">
-            <img src={{ movie.poster }} class="" alt={{ movie.title }}>
-            <div class="hoverable">
-                <h5 class="font-weight-bold movie-title">{{ movie.title }}</h5>
-                <p class="font-weight-bold movie-synopsis">{{ movie.synopsis }}</p>
-            </div>
+        <div class="card2 text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
+            <a href="{{ path("movie", parameters={id: movie.id }) }}">
+                <div class="hoverable">
+                    <div class="hoverable-content">
+                        <h5 class="movie-title">{{ movie.title }}</h5>
+                        <p class="movie-synopsis">{{ movie.release_year }}</p>
+                    </div>
+                </div>
+            </a>
         </div>
     {% endfor %}
 </div>
@@ -22,14 +25,19 @@
 
 <div class="card-deck2">
     {% for movie in last_watched %}
-        <div class="card2 text-white hover-action">
-            <img src={{ movie.poster }} class="" alt={{ movie.title }}>
-            <div class="hoverable">
-                <h5 class="font-weight-bold movie-title">{{ movie.title }}</h5>
-                <p class="font-weight-bold movie-synopsis">{{ movie.synopsis }}</p>
-            </div>
+        <div class="card2 text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
+            <a href="{{ path("movie", parameters={id: movie.id } ) }}">
+                <div class="hoverable">
+                    <div class="hoverable-content">
+                        <h5 class="movie-title">{{ movie.title }}</h5>
+                        <p class="movie-synopsis">{{ movie.release_year }}</p>
+                    </div>
+                </div>
+            </a>
         </div>
     {% endfor %}
 </div>
+
+<div class="spacer"></div>
 
 {% endblock %}

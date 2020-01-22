@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MovieController!{% endblock %}
+{% block title %}{{ info.title }}{% endblock %}
 
 {% block body %}
 
@@ -9,9 +9,9 @@
         <img class="img-fluid" src="{{ info.background }}"/>
     </div>
     <div class="title-block">
-        <span class="" style="font-size: 3em;">{{ info.name }}</span>
+        <span class="" style="font-size: 3em;">{{ info.title }}</span>
         <br/>
-        <span class="text-muted" style="font-size: 2em;">{{ info.release_year }}</span>
+        <span class="text-muted" style="font-size: 2em;">{{ info.release_date|date("Y-m-d") }}</span>
         <p style="font-size:2em; text-align: justify; margin-top: 1em;">{{ info.synopsis }}</p>
         
     </div>
