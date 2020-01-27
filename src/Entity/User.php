@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -43,6 +45,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $full_name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Movie", inversedBy="hasSeen")
+     */
+    private $hasSeen;
+
+    public function __construct()
+    {
+        $this->hasSeen = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +149,32 @@ class User implements UserInterface
     public function setFullName(string $full_name): self
     {
         $this->full_name = $full_name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Movie[]
+     */
+    public function getHasSeen(): Collection
+    {
+        return $this->hasSeen;
+    }
+
+    public function addHasSeen(Movie $hasSeen): self
+    {
+        if (!$this->hasSeen->contains($hasSeen)) {
+            $this->hasSeen[] = $hasSeen;
+        }
+
+        return $this;
+    }
+
+    public function removeHasSeen(Movie $hasSeen): self
+    {
+        if ($this->hasSeen->contains($hasSeen)) {
+            $this->hasSeen->removeElement($hasSeen);
+        }
 
         return $this;
     }

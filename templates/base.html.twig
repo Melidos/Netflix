@@ -29,7 +29,7 @@
                     </li>
                     {% if app.user %}
                         <div class="nav-item {{ controller_name is defined and controller_name == "UserController" ? 'active' }}">
-                            Connecte en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Deconnexion</a>
+                            <a href="{{ path('app_logout') }}" class="nav-link text-primary">Deconnexion</a>
                         </div>
                     {% else %}
                         <li class="nav-item {{ controller_name is defined and controller_name == "UserController" ? 'active' }}">

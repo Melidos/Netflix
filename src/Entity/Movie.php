@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,6 +42,32 @@ class Movie
      * @ORM\Column(type="integer")
      */
     private $moviedb_id;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="hasSeen")
+     */
+    private $hasSeen;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Genres", inversedBy="movies")
+     */
+    private $genre;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $poster;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $background;
+
+    public function __construct()
+    {
+        $this->hasSeen = new ArrayCollection();
+        $this->genre = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,6 +130,84 @@ class Movie
     public function setMoviedbId(int $moviedb_id): self
     {
         $this->moviedb_id = $moviedb_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getHasSeen(): Collection
+    {
+        return $this->hasSeen;
+    }
+
+    public function addHasSeen(User $hasSeen): self
+    {
+        if (!$this->hasSeen->contains($hasSeen)) {
+            $this->hasSeen[] = $hasSeen;
+            $hasSeen->addHasSeen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHasSeen(User $hasSeen): self
+    {
+        if ($this->hasSeen->contains($hasSeen)) {
+            $this->hasSeen->removeElement($hasSeen);
+            $hasSeen->removeHasSeen($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Genres[]
+     */
+    public function getGenre(): Collection
+    {
+        return $this->genre;
+    }
+
+    public function addGenre(Genres $genre): self
+    {
+        if (!$this->genre->contains($genre)) {
+            $this->genre[] = $genre;
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genres $genre): self
+    {
+        if ($this->genre->contains($genre)) {
+            $this->genre->removeElement($genre);
+        }
+
+        return $this;
+    }
+
+    public function getPoster(): ?string
+    {
+        return $this->poster;
+    }
+
+    public function setPoster(?string $poster): self
+    {
+        $this->poster = "https://image.tmdb.org/t/p/original" . $poster;
+
+        return $this;
+    }
+
+    public function getBackground(): ?string
+    {
+        return $this->background;
+    }
+
+    public function setBackground(?string $background): self
+    {
+        $this->background = "https://image.tmdb.org/t/p/original" . $background;
 
         return $this;
     }
