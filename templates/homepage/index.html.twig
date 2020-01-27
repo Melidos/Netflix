@@ -4,24 +4,44 @@
 
 {% block body %}
 
-<h1 class="text-center">Recommended</h1>
+{% if app.user %}
+    <h1 class="text-center">Recommandés</h1>
 
-<div class="movie-deck">
-    {% for movie in recommended %}
-        <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
-            <a href="{{ path("movie", parameters={id: movie.id }) }}">
-                <div class="hoverable">
-                    <div class="hoverable-content">
-                        <h5 class="movie-title">{{ movie.title }}</h5>
-                        <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
+    <div class="movie-deck">
+        {% for movie in recommended %}
+            <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
+                <a href="{{ path("movie", parameters={id: movie.id }) }}">
+                    <div class="hoverable">
+                        <div class="hoverable-content">
+                            <h5 class="movie-title">{{ movie.title }}</h5>
+                            <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </div>
-    {% endfor %}
-</div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <h1 class="text-center">Populaires</h1>
 
-<h1 class="text-center">Last Watched</h1>
+    <div class="movie-deck">
+        {% for movie in popular %}
+            <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
+                <a href="{{ path("movie", parameters={id: movie.id }) }}">
+                    <div class="hoverable">
+                        <div class="hoverable-content">
+                            <h5 class="movie-title">{{ movie.title }}</h5>
+                            <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+    <h1 class="text-center">Ajoutés en dernier</h1>
 
 <div class="movie-deck">
     {% for movie in last_watched %}
@@ -30,7 +50,7 @@
                 <div class="hoverable">
                     <div class="hoverable-content">
                         <h5 class="movie-title">{{ movie.title }}</h5>
-                        <p class="movie-synopsis">{{ movie.release_year }}</p>
+                        <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
                     </div>
                 </div>
             </a>

@@ -15,11 +15,17 @@
     </div>
 </div>
 
-<div class="added-block">
-    <p class="text-left" style="float:left; margin: 10px 0">Vu</p>
-    <p class="text-right" style="float:right; margin: 10px 0">A voir</p>
-    <div style="clear:both;"></div>
-</div>
+{% if app.user %}
+    <div class="added-block">
+        <p class="text-left" style="float:left; margin: 10px 0">Vu</p>
+        <p class="text-right" style="float:right; margin: 10px 0">A voir</p>
+        <div style="clear:both;"></div>
+    </div>
+{% else %}
+    <div class="added-block">
+        <p class="text-center"><a href="{{ path("app_login") }}">Connectez-vous</a> pour ajouter le film</p>
+    </div>
+{% endif %}
 
 <h1 class="text-center" style="padding-top: 1em; padding-bottom: 1em;">Films Similaires</h1>
 
