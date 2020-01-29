@@ -11,9 +11,7 @@ class MovieFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
+        /*
         $movie1 = new Movie();
         $movie2 = new Movie();
         $movie3 = new Movie();
@@ -92,5 +90,6 @@ class MovieFixtures extends Fixture
     }
 
         $manager->flush();
+        */
     }
 }

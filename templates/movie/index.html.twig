@@ -17,7 +17,7 @@
 
 {% if app.user %}
     <div class="added-block">
-        <p class="text-left" style="float:left; margin: 10px 0">Vu</p>
+        <a href="{{ path("movie_has_seen", parameters={ id: info.id }) }}"><p class="text-left" style="float:left; margin: 10px 0">Vu</p></a>
         <p class="text-right" style="float:right; margin: 10px 0">A voir</p>
         <div style="clear:both;"></div>
     </div>
