@@ -1,4 +1,4 @@
-body {
+body, .pagination li a {
     background-color: rgba(240, 240, 240, 1);
 }
 
@@ -243,4 +243,9 @@ body,
     margin-top: 10px;
     height: 400px;
     flex: 1;
+}
+
+.pagination {
+    margin: 10px auto;
+    justify-content: center;
 }

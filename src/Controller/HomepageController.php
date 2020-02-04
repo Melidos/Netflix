@@ -89,11 +89,23 @@ class HomepageController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function allMovies(int $page) {
-        $movies = $this->getDoctrine()->getRepository(Movie::class)->find10OrderByTitle($page);
-        //TODO: Twig -> Ajouter une "navbar" de page
+        //ini_set('memory_limit', '-1');
+        $em = $this->getDoctrine()->getRepository(Movie::class);
+        $movies = $em->find10OrderByTitle($page);
+
+        $last_page = ceil($em->count([]) / 10);
+        for ($i = ($page <= 3) ? 1 : $page - 2;
+             $i < $page + 3;
+             $i++)
+            {
+                $pages[] = $i;
+            }
         return $this->render('homepage/all.html.twig', [
             'controller_name' => 'allMovies',
             'movies' => $movies,
+            'pages' => $pages,
+            'current_page' => $page,
+            'last_page' => $last_page,
         ]);
     }
 }
