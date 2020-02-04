@@ -6,13 +6,7 @@
  */
 
 // any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.css');
+require('../css/appDark.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 // const $ = require('jquery');
-
-function getSize() {
-    document.getElementById("test").innerHTML = window.innerWidth + " x " + window.innerHeight;
-}
-window.onresize = getSize;
-window.onload = getSize;

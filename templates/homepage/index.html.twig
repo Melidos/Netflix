@@ -3,50 +3,17 @@
 {% block title %}Hello HomepageController!{% endblock %}
 
 {% block body %}
+    {% if app.user %}
+        <h1 class="text-center">Recommandés</h1>
 
-{% if app.user %}
-    <h1 class="text-center">Recommandés</h1>
-
-    <div class="movie-deck">
+        <div class="movie-deck">
         {% for movie in recommended %}
-            <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
-                <a href="{{ path("movie", parameters={id: movie.id }) }}">
-                    <div class="hoverable">
-                        <div class="hoverable-content">
-                            <h5 class="movie-title">{{ movie.title }}</h5>
-                            <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
-{% else %}
-    <h1 class="text-center">Populaires</h1>
-
-    <div class="movie-deck">
-        {% for movie in popular %}
-            <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
-                <a href="{{ path("movie", parameters={id: movie.id }) }}">
-                    <div class="hoverable">
-                        <div class="hoverable-content">
-                            <h5 class="movie-title">{{ movie.title }}</h5>
-                            <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
-
-
-    <h1 class="text-center">Ajoutés en dernier</h1>
-
-<div class="movie-deck">
-    {% for movie in last_watched %}
-        <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
-            <a href="{{ path("movie", parameters={id: movie.id } ) }}">
+            {% if movie.poster == "https://image.tmdb.org/t/p/original" %}
+                <div class="movie-card text-white hover-action" style="background-image: url({{asset('img/placeholder-Movie.png')}}); background-size:100%">
+            {% else %}
+                <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
+            {% endif %}
+            <a href="{{ path("movie", parameters={id: movie.id }) }}">
                 <div class="hoverable">
                     <div class="hoverable-content">
                         <h5 class="movie-title">{{ movie.title }}</h5>
@@ -54,10 +21,51 @@
                     </div>
                 </div>
             </a>
+            </div>
+        {% endfor %}
         </div>
-    {% endfor %}
-</div>
+    {% endif %}
+    <h1 class="text-center">Populaires</h1>
 
-<div class="spacer"></div>
+    <div class="movie-deck">
+        {% for movie in popular %}
+            {% if movie.poster == "https://image.tmdb.org/t/p/original" %}
+                <div class="movie-card text-white hover-action" style="background-image: url({{asset('img/placeholder-Movie.png')}}); background-size:100%">
+            {% else %}
+                <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
+            {% endif %}
+                    <a href="{{ path("movie", parameters={id: movie.id }) }}">
+                        <div class="hoverable">
+                            <div class="hoverable-content">
+                                <h5 class="movie-title">{{ movie.title }}</h5>
+                                <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+        {% endfor %}
+    </div>
 
+    <h1 class="text-center">Derniers Ajouts</h1>
+
+    <div class="movie-deck">
+        {% for movie in latest %}
+        {% if movie.poster == "https://image.tmdb.org/t/p/original" %}
+        <div class="movie-card text-white hover-action" style="background-image: url({{asset('img/placeholder-Movie.png')}}); background-size:100%">
+            {% else %}
+            <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
+                {% endif %}
+                <a href="{{ path("movie", parameters={id: movie.id }) }}">
+                    <div class="hoverable">
+                        <div class="hoverable-content">
+                            <h5 class="movie-title">{{ movie.title }}</h5>
+                            <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="spacer"></div>
 {% endblock %}

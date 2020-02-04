@@ -11,7 +11,19 @@ use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 
 class MovieController extends AbstractController
+//TODO: Ajouter une fonction de recherche
+//TODO: Ajouter une fonction pour afficher tous les films page par page
+//TODO: Ajouter une fonction de tri sur les pages contenant tous les films.
 {
+    private function getSimIds(int $id) {
+        //TODO: Recupere la liste des films similaires
+        $reco = array_slice(json_decode(file_get_contents("https://api.themoviedb.org/3/movie/".$id."/recommendations?api_key=7d43208d19a4ad654a8afdf455744183&language=fr-FR&page=1"), true)["results"],0, 10);
+        foreach ($reco as $movie) {
+            $results[] = $movie["id"];
+        }
+        return isset($results) ? $results : [];
+    }
+
     /**
      * @Route("/movie/add/{id}", name="movie_has_seen")
      * @param Security $security
@@ -37,6 +49,13 @@ class MovieController extends AbstractController
     {
         $movie = $this->getDoctrine()->getRepository(Movie::class)->find($id);
 
+        $idList = $this->getSimIds($movie->getMoviedbId());
+
+        //Recuperer les infos des films recommandes par leur id
+        $movieList = [];
+        foreach ($idList as $i) {
+            $movieList[] = $this->getDoctrine()->getRepository(Movie::class)->findOneBy(["moviedb_id" => $i]);
+        }
         return $this->render('movie/index.html.twig', [
             'controller_name' => 'MovieController',
             'info' => [
@@ -46,32 +65,7 @@ class MovieController extends AbstractController
                 "release_date" => $movie->getReleaseDate(),
                 "synopsis" => $movie->getSynopsis()
             ],
-            "similar_movies" => [
-                [
-                    "title" => "Jumanji : next level",
-                    "poster" => "https://image.tmdb.org/t/p/w1280/kc62PCo8u5sZKq0crYvZSidLFPr.jpg",
-                    "release_year" => 2019,
-                    "id" => 1,
-                ],
-                [
-                    "title" => "Star Wars : L'Ascension de Skywalker",
-                    "poster" => "https://image.tmdb.org/t/p/w1280/w1fqnG3W2xqCPTvjdPJTcfPMYH1.jpg",
-                    "release_year" => 2019,
-                    "id" => 1,
-                ],
-                [
-                    "title" => "Joker",
-                    "poster" => "https://image.tmdb.org/t/p/w1280/tWjJ3ILjsbTwKgXxEv48QAbYZ19.jpg",
-                    "release_year" => 2019,
-                    "id" => 1,
-                ],
-                [
-                    "title" => "Once Upon a Time… in Hollywood",
-                    "poster" => "https://image.tmdb.org/t/p/w1280/oaxMobKQgpUbZI0WcNiSq6qRwyA.jpg",
-                    "release_year" => 2019,
-                    "id" => 1,
-                ],
-            ],
+            "similar_movies" => $movieList,
         ]);
     }
 }

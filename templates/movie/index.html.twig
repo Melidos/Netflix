@@ -4,25 +4,29 @@
 
 {% block body %}
 
-<div class="background-title">
-    <div class="" style="background: url({{ info.background }}); background-size: cover;">
-        <img class="img-fluid" src="{{ info.background }}"/>
+<div id="background-title">
+    <div class="" style="background: url('{{ info.background }}'); background-size: cover;">
+        {% if info.background != "https://image.tmdb.org/t/p/original" %}<img class="img-fluid" src="{{ info.background }}"/>{% endif %}
     </div>
-    <div class="title-block">
+    <div class="title-block" {% if info.background == "https://image.tmdb.org/t/p/original" %} style="margin-top: 0;" {% endif %}>
         <p class="" style="font-size: 1.5em;">{{ info.title }}</p>
         <p class="text-muted" style="font-size: 1.3em; margin: -10px 0;">{{ info.release_date|date("d M Y") }}</p>
-        <p style="font-size:1em; text-align: justify; margin-top: 1em;">{{ info.synopsis }}</p>
+        <p style="font-size:1em; text-align: justify; margin-top: 1em;">
+            {% if info.synopsis == "" %}
+                Aucun synopsis disponible
+            {% else %}
+                {{ info.synopsis }}
+            {% endif %}
+        </p>
     </div>
 </div>
 
 {% if app.user %}
-    <div class="added-block">
-        <a href="{{ path("movie_has_seen", parameters={ id: info.id }) }}"><p class="text-left" style="float:left; margin: 10px 0">Vu</p></a>
-        <p class="text-right" style="float:right; margin: 10px 0">A voir</p>
-        <div style="clear:both;"></div>
+    <div id="added-block" class="text-center" style="padding: 10px 0";>
+        <a href="{{ path("movie_has_seen", parameters={ id: info.id }) }}" class="myButton">Vu</a>
     </div>
 {% else %}
-    <div class="added-block">
+    <div id="added-block">
         <p class="text-center"><a href="{{ path("app_login") }}">Connectez-vous</a> pour ajouter le film</p>
     </div>
 {% endif %}
@@ -30,18 +34,21 @@
 <h1 class="text-center" style="padding-top: 1em; padding-bottom: 1em;">Films Similaires</h1>
 
 <div class="movie-deck">
-    {% for movie in similar_movies %}
-        <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
-            <a href="{{ path("movie", parameters={id: movie.id }) }}">
-                <div class="hoverable">
-                    <div class="hoverable-content">
-                        <h5 class="movie-title">{{ movie.title }}</h5>
-                        <p class="movie-synopsis">{{ movie.release_year }}</p>
-                    </div>
+{% for movie in similar_movies %}
+{% if movie.poster == "https://image.tmdb.org/t/p/original" %}
+<div class="movie-card text-white hover-action" style="background-image: url({{asset('img/placeholder-Movie.png')}}); background-size:100%">
+    {% else %}
+    <div class="movie-card text-white hover-action" style="background-image: url( {{ movie.poster }}); background-size:cover">
+        {% endif %}
+        <a href="{{ path("movie", parameters={id: movie.id }) }}">
+            <div class="hoverable">
+                <div class="hoverable-content">
+                    <h5 class="movie-title">{{ movie.title }}</h5>
+                    <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
+    </div>
     {% endfor %}
 </div>
-
 {% endblock %}

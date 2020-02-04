@@ -7,19 +7,20 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
             {{ encore_entry_link_tags('app') }}
+            {% if app.request.cookies.get("darkMode") %}
+                {{ encore_entry_link_tags('appDark') }}
+            {% endif %}
         {% endblock %}
         {% block javascript %}
             <script type="text/javascript">
                 function openNav() {
                     document.getElementById("mySidenav").style.width = "250px";
-                    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
                     console.log("open");
-                    setTimeout(function () { document.body.addEventListener("click", closeNav); })
+                    setTimeout(function () { document.body.addEventListener("click", closeNav); });
                   }
 
                   function closeNav() {
                       document.getElementById("mySidenav").style.width = "0";
-                      document.body.style.backgroundColor = "lightgray";
                       console.log("close");
                       document.body.removeEventListener("click", closeNav);
                   }
@@ -28,16 +29,19 @@
             <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            <script src="https://kit.fontawesome.com/8274cc840c.js" crossorigin="anonymous"></script>
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body class="container-fluid">
 
-        <div class="navbar navbar-light">
+        <div id="navbarDiv" class="navbar navbar-light sticky-top">
             <button class="navbar-toggler" onclick="openNav()">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <a href="{{ path("homepage") }}"><i class="fas fa-home fa-2x" style="color: black"></i></a>
         </div>
-        <nav id="mySidenav" class="sidenav">
+        <nav id="mySidenav" class="sidenav" style="z-index: 1100;">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a class="{% if controller_name is defined and controller_name == "HomepageController" %}nav-active{% endif %}" href="{{ path("homepage") }}">Accueil</a>
             {% if app.user %}
@@ -45,15 +49,15 @@
             {% else %}
                 <a class="{{ controller_name is defined and controller_name == "UserController" ? 'nav-active' }}" href="{{ path("app_login") }}">Connexion</a>
             {% endif %}
-            <a href="#">Clients</a>
-            <a href="#">Contact</a>
+            {% if app.request.cookies.get("darkMode") %}
+                <a href="{{ path("darkMode") }}">Mode clair</a>
+            {% else %}
+                <a href="{{ path("darkMode") }}">Mode sombre</a>
+            {% endif %}
         </nav>
 
         <div class="text-center fixed-top" id="test"></div>
 
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        <div id="content" style="height: 100%;">{% block body %}{% endblock %}</div>
     </body>
 </html>

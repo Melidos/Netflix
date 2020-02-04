@@ -3,14 +3,19 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -34,5 +39,27 @@ class UserController extends AbstractController
     public function logout()
     {
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
+    }
+
+    /**
+     * @Route("/darkMode", name="darkMode")
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function setDarkMode(Request $request) {
+        $referer = $request->headers->get("referer");
+        $oldCookie = $request->cookies->get("darkMode");
+        if ($oldCookie) {
+            $cookie = new Cookie('darkMode', "0");
+        }
+        else {
+            $cookie = new Cookie('darkMode', "1");
+        }
+
+        //TODO: Redirect sur le referer et non pas la page d'accueil
+        $response = new RedirectResponse($referer, "302");
+        $response->headers->setCookie($cookie);
+
+        return $response;
     }
 }
