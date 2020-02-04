@@ -36,10 +36,8 @@
     <body class="container-fluid">
 
         <div id="navbarDiv" class="navbar navbar-light sticky-top">
-            <button class="navbar-toggler" onclick="openNav()">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a href="{{ path("homepage") }}"><i class="fas fa-home fa-2x" style="color: black"></i></a>
+            <i class="fas fa-bars" onclick="openNav()"></i>
+            <a href="{{ path("homepage") }}"><i class="fas fa-home fa-2x"></i></a>
         </div>
         <nav id="mySidenav" class="sidenav" style="z-index: 1100;">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>

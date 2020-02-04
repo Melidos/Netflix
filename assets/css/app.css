@@ -211,3 +211,16 @@ body,
     padding: 0 auto;
     margin-left: -5%;
 }
+
+.fa-bars {
+    color: black;
+    font-size: 30px;
+    border: 1px solid black;
+    padding: 5px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.fa-home {
+    color: black;
+}
