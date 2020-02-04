@@ -32,11 +32,13 @@ class HomepageController extends AbstractController
 
     private function getLatestIds() {
         ini_set('memory_limit', '-1');
-        $movies = $this->getDoctrine()->getRepository(Movie::class)->findAll();
+        return $this->getDoctrine()->getRepository(Movie::class)->find10OrderByCreatedAtDesc();
+
+        /*$movies = $this->getDoctrine()->getRepository(Movie::class)->findAll();
         foreach ($movies as $movie) {
             $movieIds[] = $movie->getMovieDbId();
         }
-        return array_slice($movieIds, 0, 10);
+        return array_slice($movieIds, 0, 10);*/
     }
 
     /**

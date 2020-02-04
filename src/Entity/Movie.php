@@ -63,10 +63,16 @@ class Movie
      */
     private $background;
 
+    /**
+     * @ORM\Column(name="created_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+    */
+    private $created_at;
+
     public function __construct()
     {
         $this->hasSeen = new ArrayCollection();
         $this->genre = new ArrayCollection();
+        $this->created_at = new \DateTime();
     }
 
     public function getId(): ?int
@@ -109,6 +115,19 @@ class Movie
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
 
     public function getRuntime(): ?int
     {

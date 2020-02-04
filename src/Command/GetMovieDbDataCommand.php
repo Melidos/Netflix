@@ -13,7 +13,6 @@ use App\Entity\Movie;
 
 class GetMovieDbDataCommand extends Command
 {
-    //TODO: Stocker les valeurs des x derniers ids a un endroit pour les recuperer sans avoir a demander toute la table
     protected static $defaultName = 'GetMovieDbData';
 
     /**
