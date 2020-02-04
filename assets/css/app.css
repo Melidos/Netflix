@@ -224,3 +224,23 @@ body,
 .fa-home {
     color: black;
 }
+
+.movie-deck-flex {
+    display: flex;
+    flex-flow: row wrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.movie-card-flex {
+    display: block;
+    width: 100%;
+    min-height: inherit;
+    position: relative;
+    text-align: justify;
+    max-width: 350px;
+    margin-right: 10px;
+    margin-top: 10px;
+    height: 400px;
+    flex: 1;
+}

@@ -52,6 +52,7 @@
             {% else %}
                 <a href="{{ path("darkMode") }}">Mode sombre</a>
             {% endif %}
+            <a class="{% if controller_name is defined and controller_name == "allMovies" %}nav-active{% endif %}" href="{{ path("allMovies", parameters = {"page" : 1}) }}">Voir tous les films</a>
         </nav>
 
         <div class="text-center fixed-top" id="test"></div>

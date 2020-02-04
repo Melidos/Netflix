@@ -33,6 +33,21 @@ class MovieRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Movie[] Returns an array of Movie objects
+     */
+    public function find10OrderByTitle($page = 1)
+    {
+        return $this->createQueryBuilder('m')
+            ->select("m")
+            ->orderBy('m.title', 'ASC')
+            ->setMaxResults(10)
+            ->setFirstResult($page*10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     /*
     public function findOneBySomeField($value): ?Movie
     {

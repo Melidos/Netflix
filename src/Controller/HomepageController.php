@@ -31,14 +31,7 @@ class HomepageController extends AbstractController
     }
 
     private function getLatestIds() {
-        ini_set('memory_limit', '-1');
         return $this->getDoctrine()->getRepository(Movie::class)->find10OrderByCreatedAtDesc();
-
-        /*$movies = $this->getDoctrine()->getRepository(Movie::class)->findAll();
-        foreach ($movies as $movie) {
-            $movieIds[] = $movie->getMovieDbId();
-        }
-        return array_slice($movieIds, 0, 10);*/
     }
 
     /**
@@ -48,7 +41,6 @@ class HomepageController extends AbstractController
         //TODO: Run GetMovieDbData command on launch
     {
         //TODO: Recuperer automatiquement la liste des ids des films recommandés
-        //TODO: Recuperer automatiquement la liste des ids des films populaires pour les utilisateurs non connectés ou ceux n'ayant pas ajouté de films vus (getPopIds)
         //TODO: Creer une page contenant tous les films
         $idRec = $this->getRecIds();
         $idRec = [2, 3, 5, 6, 8, 9, 11, 12];
@@ -89,6 +81,19 @@ class HomepageController extends AbstractController
         return $this->render('search/index.html.twig', [
             'controller_name' => 'HomepageController',
         ]);
+    }
 
+    /**
+     * @Route("/all/{page}", name="allMovies", requirements={"page"="\d+"})
+     * @param int $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function allMovies(int $page) {
+        $movies = $this->getDoctrine()->getRepository(Movie::class)->find10OrderByTitle($page);
+        //TODO: Twig -> Ajouter une "navbar" de page
+        return $this->render('homepage/all.html.twig', [
+            'controller_name' => 'allMovies',
+            'movies' => $movies,
+        ]);
     }
 }
