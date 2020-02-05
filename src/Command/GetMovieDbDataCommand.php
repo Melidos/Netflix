@@ -45,21 +45,33 @@ class GetMovieDbDataCommand extends Command
 
         $lastId = json_decode(file_get_contents("https://api.themoviedb.org/3/movie/latest?api_key=7d43208d19a4ad654a8afdf455744183&language=fr-FR"), true)["id"];
 
+        $y = 0;
         for ($i = (isset($movieIds) ? max($movieIds) + 1 : 0); $i <= $lastId; $i++) {
             $movieJson = json_decode(@file_get_contents("https://api.themoviedb.org/3/movie/".$i."?api_key=7d43208d19a4ad654a8afdf455744183&language=fr-FR&append_to_response=fr-FR%2Cen-US%2Cnull"), true);
             if (isset($movieJson)) {
-                print("id ".$i." traité / ".$lastId." : ".$movieJson["title"].PHP_EOL);
-                $movie = new Movie();
-                $movie->setPoster($movieJson["poster_path"]);
-                $movie->setReleaseDate(new DateTime($movieJson["release_date"]));
-                $movie->setTitle($movieJson["title"]);
-                $movie->setBackground($movieJson["backdrop_path"]);
-                $movie->setMoviedbId($i);
-                $movie->setRuntime($movieJson["runtime"]);
-                $movie->setSynopsis($movieJson["overview"]);
+                if ($movieJson["overview"] == "" && $movieJson["backdrop_path"] == "") {
+                    print("id ".$i." non traité".PHP_EOL);
+                }
+                else {
+                    print("id ".$i." traité / ".$lastId." : ".$movieJson["title"].PHP_EOL);
+                    $movie = new Movie();
+                    $movie->setPoster($movieJson["poster_path"]);
+                    $movie->setReleaseDate(new DateTime($movieJson["release_date"]));
+                    $movie->setTitle($movieJson["title"]);
+                    $movie->setBackground($movieJson["backdrop_path"]);
+                    $movie->setMoviedbId($i);
+                    $movie->setRuntime($movieJson["runtime"]);
+                    $movie->setSynopsis($movieJson["overview"]);
 
-                $this->em->persist($movie);
-                $this->em->flush();
+                    $y++;
+
+                    $this->em->persist($movie);
+                    if ($y >= 100) {
+                        $y = 0;
+                        print("Films ajoutés".PHP_EOL);
+                        $this->em->flush();
+                    }
+                }
             }
             else {
                 print("id ".$i." non présent".PHP_EOL);

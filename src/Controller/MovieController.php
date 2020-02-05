@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Movie;
@@ -12,12 +13,11 @@ use Symfony\Component\Security\Core\Security;
 
 class MovieController extends AbstractController
 //TODO: Ajouter une fonction de recherche
-//TODO: Ajouter une fonction pour afficher tous les films page par page
 //TODO: Ajouter une fonction de tri sur les pages contenant tous les films.
 {
     private function getSimIds(int $id) {
         //TODO: Recupere la liste des films similaires
-        $reco = array_slice(json_decode(file_get_contents("https://api.themoviedb.org/3/movie/".$id."/recommendations?api_key=7d43208d19a4ad654a8afdf455744183&language=fr-FR&page=1"), true)["results"],0, 10);
+        $reco = array_slice(json_decode(file_get_contents("https://api.themoviedb.org/3/movie/".$id."/recommendations?api_key=7d43208d19a4ad654a8afdf455744183&language=fr-FR&page=1"), true)["results"],0, 2);
         foreach ($reco as $movie) {
             $results[] = $movie["id"];
         }
@@ -65,7 +65,26 @@ class MovieController extends AbstractController
                 "release_date" => $movie->getReleaseDate(),
                 "synopsis" => $movie->getSynopsis()
             ],
-            "similar_movies" => $movieList,
+            "similar_movies" => array_filter($movieList),
         ]);
+    }
+
+    /**
+     * @Route("/add/{id}", name="addSeenMovie")
+     * @param int $id
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function addSeen(int $id, Request $request) {
+        $movie = $this->getDoctrine()->getRepository(Movie::class)->find($id);
+        $user = $this->getUser();
+        $user->addHasSeen($movie);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        $referer = $request->headers->get("referer");
+
+        return new RedirectResponse($referer, "302");
     }
 }

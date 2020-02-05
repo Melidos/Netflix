@@ -23,7 +23,7 @@
 
 {% if app.user %}
     <div id="added-block" class="text-center" style="padding: 10px 0";>
-        <a href="{{ path("movie_has_seen", parameters={ id: info.id }) }}" class="myButton">Vu</a>
+        <a href="{{ path("addSeenMovie", parameters={ id: info.id }) }}" class="myButton">Vu</a>
     </div>
 {% else %}
     <div id="added-block">
@@ -34,6 +34,10 @@
 <h1 class="text-center" style="padding-top: 1em; padding-bottom: 1em;">Films Similaires</h1>
 
 <div class="movie-deck">
+
+    {% if similar_movies is empty %}
+        <p class="text-center" id="no-similar-movies">Aucun film similaire</p>
+    {% else %}
 {% for movie in similar_movies %}
 {% if movie.poster == "https://image.tmdb.org/t/p/original" %}
 <div class="movie-card text-white hover-action" style="background-image: url({{asset('img/placeholder-Movie.png')}}); background-size:100%">
@@ -51,4 +55,5 @@
     </div>
     {% endfor %}
 </div>
+    {% endif %}
 {% endblock %}

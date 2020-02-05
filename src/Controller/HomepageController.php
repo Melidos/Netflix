@@ -41,9 +41,8 @@ class HomepageController extends AbstractController
         //TODO: Run GetMovieDbData command on launch
     {
         //TODO: Recuperer automatiquement la liste des ids des films recommandés
-        //TODO: Creer une page contenant tous les films
         $idRec = $this->getRecIds();
-        $idRec = [2, 3, 5, 6, 8, 9, 11, 12];
+        $idRec = [2, 3, 5, 6, 8, 11, 12];
 
         //Recuperer les infos des films recommandes par leur id
         $movieRec = [];
@@ -52,18 +51,21 @@ class HomepageController extends AbstractController
         }
 
         $idPop = $this->getPopIds();
-        //$idPop = [2, 3, 5, 6, 8, 9, 11, 12];
-
-        //Recuperer les infos des films populaires par leur id
         $moviePop = [];
         foreach ($idPop as $id) {
             $moviePop[] = $this->getDoctrine()->getRepository(Movie::class)->findOneBy(["moviedb_id" => $id]);
         }
 
-        $idLast = [2, 3, 5, 6, 8, 9, 11, 12];
         $idLast = $this->getLatestIds();
         foreach ($idLast as $id) {
             $movieLast[] = $this->getDoctrine()->getRepository(Movie::class)->findOneBy(["moviedb_id" => $id]);
+        }
+
+        $user = $this->getUser();
+        if (isset($user)) {
+            foreach ($user->getHasSeen() as $movie) {
+                $moviesSeen[] = $movie->getId();
+            }
         }
 
         return $this->render('homepage/index.html.twig', [
@@ -71,6 +73,7 @@ class HomepageController extends AbstractController
             "popular" => $moviePop,
             "recommended" => $movieRec,
             "latest" => $movieLast,
+            "moviesSeen" => (isset($moviesSeen)) ? $moviesSeen : [],
         ]);
     }
 

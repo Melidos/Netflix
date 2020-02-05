@@ -44,6 +44,7 @@
             <a class="{% if controller_name is defined and controller_name == "HomepageController" %}nav-active{% endif %}" href="{{ path("homepage") }}">Accueil</a>
             {% if app.user %}
                 <a class="{{ controller_name is defined and controller_name == "UserController" ? 'nav-active' }}" href="{{ path('app_logout') }}">Deconnexion</a>
+                <a class="{{ controller_name is defined and controller_name ==  "UserAccount" ? 'nav-active' }}" href="{{ path("UserAccount", parameters={username : app.user.username}) }}">Mon Compte</a>
             {% else %}
                 <a class="{{ controller_name is defined and controller_name == "UserController" ? 'nav-active' }}" href="{{ path("app_login") }}">Connexion</a>
             {% endif %}

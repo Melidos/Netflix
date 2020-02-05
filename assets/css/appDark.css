@@ -30,3 +30,7 @@ body {
 .checkbox.mb-3, #test, .fa-home, h1, label {
     color: white;
 }
+
+#no-similar-movies {
+    color: white;
+}

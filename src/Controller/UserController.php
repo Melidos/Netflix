@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\User;
 
 class UserController extends AbstractController
 {
@@ -61,5 +62,32 @@ class UserController extends AbstractController
         $response->headers->setCookie($cookie);
 
         return $response;
+    }
+
+    /**
+     * @Route("/user/{username}", name="UserAccount")
+     * @param string $username
+     * @return Response
+     */
+    public function index(string $username) {
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["username" => $username]);
+
+        return $this->render("user/index.html.twig", [
+            "user" => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/user/{username}/movies", name="MoviesSeen")
+     * @param string $username
+     * @return Response
+     */
+    public function allMoviesSeen(string $username) {
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["username" => $username]);
+
+        return $this->render("user/all.html.twig", [
+            "movies" => (isset($user)) ? $user->getHasSeen() : [],
+            "user" => $user,
+        ]);
     }
 }

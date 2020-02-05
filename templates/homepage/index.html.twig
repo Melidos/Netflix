@@ -15,6 +15,9 @@
             {% endif %}
             <a href="{{ path("movie", parameters={id: movie.id }) }}">
                 <div class="hoverable">
+                    {% if movie.id in moviesSeen %}
+                        <i class="fas fa-check-circle fa-3x"></i>
+                    {% endif %}
                     <div class="hoverable-content">
                         <h5 class="movie-title">{{ movie.title }}</h5>
                         <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
@@ -36,6 +39,9 @@
             {% endif %}
                     <a href="{{ path("movie", parameters={id: movie.id }) }}">
                         <div class="hoverable">
+                            {% if movie.id in moviesSeen %}
+                                <i class="fas fa-check-circle fa-3x"></i>
+                            {% endif %}
                             <div class="hoverable-content">
                                 <h5 class="movie-title">{{ movie.title }}</h5>
                                 <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>
@@ -57,6 +63,9 @@
                 {% endif %}
                 <a href="{{ path("movie", parameters={id: movie.id }) }}">
                     <div class="hoverable">
+                        {% if movie.id in moviesSeen %}
+                            <i class="fas fa-check-circle fa-3x"></i>
+                        {% endif %}
                         <div class="hoverable-content">
                             <h5 class="movie-title">{{ movie.title }}</h5>
                             <p class="movie-synopsis">{{ movie.releaseDate|date("d M Y") }}</p>

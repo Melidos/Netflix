@@ -207,9 +207,9 @@ body,
 
 #navbarDiv {
     background-color: white;
-    width: 110%;
+    width: 100vw;
     padding: 0 auto;
-    margin-left: -5%;
+    margin-left: -14px;
 }
 
 .fa-bars {
@@ -248,4 +248,11 @@ body,
 .pagination {
     margin: 10px auto;
     justify-content: center;
+}
+
+.fas.fa-check-circle {
+    position: absolute;
+    right: 5px;
+    color: rgba(0, 255, 0, 1);
+    top: 5px;
 }

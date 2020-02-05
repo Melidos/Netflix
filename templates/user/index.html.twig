@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Compte{% endblock %}
+
+{% block body %}
+{% if app.user != user %}
+
+    <div class="alert alert-danger" role="alert">
+        Vous n'êtes pas autorisé à accéder à ce compte.
+    </div>
+
+{% else %}
+
+    <form>
+        <div class="form-group">
+            <label for="Mail">Adresse Mail</label>
+            <input type="email" class="form-control" id="Mail" aria-describedby="emailHelp" placeholder="{{ user.mail }}">
+        </div>
+        <div class="form-group">
+            <label for="Password">Mot de Passe</label>
+            <input type="password" class="form-control" id="Password">
+        </div>
+        <div class="form-group">
+            <label for="FullName">Nom Complet</label>
+            <input type="text" class="form-control" id="FullName" placeholder="{{ user.FullName }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+
+{% endif %}
+
+{% endblock %}
