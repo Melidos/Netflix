@@ -11,7 +11,7 @@ use App\Entity\Movie;
 class HomepageController extends AbstractController
 {
     private function getPopIds() {
-        $json = array_slice(json_decode(file_get_contents("https://api.themoviedb.org/3/trending/movie/week?api_key=7d43208d19a4ad654a8afdf455744183"), true)["results"], 0, 3);
+        $json = array_slice(json_decode(file_get_contents("https://api.themoviedb.org/3/trending/movie/week?api_key=7d43208d19a4ad654a8afdf455744183"), true)["results"], 0, 10);
         foreach ($json as $movie) {
             $result[] = $movie["id"];
         }

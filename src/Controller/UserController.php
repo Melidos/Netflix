@@ -70,6 +70,7 @@ class UserController extends AbstractController
      * @return Response
      */
     public function index(string $username) {
+        //TODO: Ajouter un moyen de modifier les informations
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["username" => $username]);
 
         return $this->render("user/index.html.twig", [

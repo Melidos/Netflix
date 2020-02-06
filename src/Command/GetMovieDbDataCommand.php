@@ -66,7 +66,7 @@ class GetMovieDbDataCommand extends Command
                     $y++;
 
                     $this->em->persist($movie);
-                    if ($y >= 100) {
+                    if ($y >= 1) {
                         $y = 0;
                         print("Films ajoutés".PHP_EOL);
                         $this->em->flush();
